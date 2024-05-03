@@ -12,7 +12,6 @@ pipeline {
     }
 
     environment {
-        ACCOUNT_NAME    = 'pakurity-sa@studied-beanbag-422111.iam.gserviceaccount.com'
         GCLOUD_PROJECT  = 'studied-beanbag-422111'
     }
 
