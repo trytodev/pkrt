@@ -31,7 +31,7 @@ pipeline {
                         dir('terraform') {
                             sh 'terraform init'
                             sh 'cat ${GOOGLE_APPLICATION_CREDENTIALS} > secret-key-file.json'
-                            sh 'terraform plan'
+                            sh 'terraform apply -auto-approve'
                         }
                     }
                 }
