@@ -16,6 +16,10 @@ pipeline {
         GCLOUD_PROJECT  = 'studied-beanbag-422111'
     }
 
+    triggers {
+        pollSCM('H/5 * * * *')
+    }
+
     stages {
         stage('Source code checkout') {
             steps {
