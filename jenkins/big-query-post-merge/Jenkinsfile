@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+    }
+
+    parameters {
+        string name: 'REVISION',
+            defaultValue: 'master',
+            description: 'Revision to deploy'
+    }
+
+    environment {
+        ACCOUNT_NAME    = 'pakurity-sa@studied-beanbag-422111.iam.gserviceaccount.com'
+        GCLOUD_PROJECT  = 'studied-beanbag-422111'
+    }
+
+    stages {
+        stage('Source code checkout') {
+            steps {
+                script {
+                    checkout scm
+                }
+            }
+        }
+        stage('Build') {
+            steps {
+                script {
+                    withCredentials([file(credentialsId: 'main-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                        dir('terraform') {
+                            sh 'terraform init'
+                            sh 'cat ${GOOGLE_APPLICATION_CREDENTIALS} > secret-key-file.json'
+                            sh 'terraform plan'
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

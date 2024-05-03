@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: bigquery-add-data
+spec:
+  template:
+    spec:
+      containers:
+      - name: bigquery-add-data
+        image: europe-central2-docker.pkg.dev/studied-beanbag-422111/dev-sec-ops-docker/bigquery-add-data:latest
+        command: ["python3", "scripts/dataAdd.py"]
+        env:
+        - name: GCLOUD_PROJECT
+          valueFrom:
+            configMapKeyRef:
+              name: bigquery-config
+              key: GCLOUD_PROJECT
+        volumeMounts:
+        - name: google-credentials
+          mountPath: /home/jenkins/.config/gcloud/application_default_credentials.json
+          subPath: application_default_credentials.json
+          name: google-credentials
+      volumes:
+      - name: google-credentials
+        secret:
+          secretName: impersonated-secret
+      restartPolicy: Never
