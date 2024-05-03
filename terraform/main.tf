@@ -34,18 +34,18 @@ resource "google_bigquery_table" "table" {
   deletion_protection = false
 }
 
-# resource "google_bigquery_table" "table_view" {
-#   dataset_id = google_bigquery_dataset.dataset.dataset_id
-#   table_id   = "my_view"
-#   deletion_protection = false
+resource "google_bigquery_table" "table_view" {
+  dataset_id = google_bigquery_dataset.dataset.dataset_id
+  table_id   = "my_view"
+  deletion_protection = false
 
-#   view {
-#     query = <<EOF
-# SELECT tag, SUM(count) as total_count
-# FROM `${var.project_id}.my_dataset.my_table`
-# GROUP BY tag
-# EOF
+  view {
+    query = <<EOF
+SELECT tag, SUM(count) as total_count
+FROM `${var.project_id}.my_dataset.my_table`
+GROUP BY tag
+EOF
 
-#     use_legacy_sql = false
-#   }
-# }
+    use_legacy_sql = false
+  }
+}
