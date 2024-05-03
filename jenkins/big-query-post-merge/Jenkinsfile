@@ -30,6 +30,7 @@ pipeline {
                     withCredentials([file(credentialsId: 'main-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
                         dir('terraform') {
                             sh 'terraform init'
+                            sh 'cat ${GOOGLE_APPLICATION_CREDENTIALS} > secret-key-file.json'
                             sh 'terraform plan'
                         }
                     }

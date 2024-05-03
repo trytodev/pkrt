@@ -1,6 +1,6 @@
 variable "service_account_json" {
   description = "Path to the service account JSON file"
-  default     = "~/terraform/secret-key-file.json"
+  default     = "/var/jenkins_home/workspace/bigquery-post-merge/terraform/secret-key-file.json"
   type        = string
 }
 
