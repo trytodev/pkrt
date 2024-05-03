@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Id",
+    "type": "INTEGER",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "Tag",
+    "type": "STRING",
+    "mode": "REQUIRED"
+  },
+  {
+    "name": "Count",
+    "type": "INTEGER",
+    "mode": "REQUIRED"
+  }
+]

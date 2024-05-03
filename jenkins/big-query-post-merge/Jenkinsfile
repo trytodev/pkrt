@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+    }
+
+    parameters {
+        string name: 'REVISION',
+            defaultValue: 'master',
+            description: 'Revision to deploy'
+    }
+
+    environment {
+        ACCOUNT_NAME    = 'pakurity-sa@studied-beanbag-422111.iam.gserviceaccount.com'
+        GCLOUD_PROJECT  = 'studied-beanbag-422111'
+    }
+
+    stages {
+        stage('Source code checkout') {
+            steps {
+                script {
+                    gitCheckout branch: REVISION
+                }
+            }
+        }
+        stage('Build') {
+            steps {
+                script {
+                    withCredentials([file(credentialsId: 'main-key', variable: 'BIG_QUERY_SERVICE_ACCOUNT')]) {
+                        sh 'gcloud auth activate-service-account ${ACCOUNT_NAME} --key-file=$BIG_QUERY_SERVICE_ACCOUNT'
+                    }
+                    dir('terraform') {
+                        sh 'terraform init'
+                        sh 'terraform plan'
+                    }
+                }
+            }
+        }
+    }
+}
