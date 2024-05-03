@@ -1,6 +1,6 @@
 variable "service_account_json" {
   description = "Path to the service account JSON file"
-  default     = "~/security/gcp-bq-key.json"
+  default     = "~/terraform/secret-key-file.json"
   type        = string
 }
 

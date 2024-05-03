@@ -20,19 +20,18 @@ pipeline {
         stage('Source code checkout') {
             steps {
                 script {
-                    gitCheckout branch: REVISION
+                    checkout scm
                 }
             }
         }
         stage('Build') {
             steps {
                 script {
-                    withCredentials([file(credentialsId: 'main-key', variable: 'BIG_QUERY_SERVICE_ACCOUNT')]) {
-                        sh 'gcloud auth activate-service-account ${ACCOUNT_NAME} --key-file=$BIG_QUERY_SERVICE_ACCOUNT'
-                    }
-                    dir('terraform') {
-                        sh 'terraform init'
-                        sh 'terraform plan'
+                    withCredentials([file(credentialsId: 'main-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                        dir('terraform') {
+                            sh 'terraform init'
+                            sh 'terraform plan'
+                        }
                     }
                 }
             }
