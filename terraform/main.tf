@@ -28,7 +28,7 @@ resource "google_bigquery_dataset" "dataset" {
 
 resource "google_bigquery_table" "table" {
   dataset_id = google_bigquery_dataset.dataset.dataset_id
-  table_id   = "my_table"
+  table_id   = "my_table1"
 
   schema = file(var.schema_json)
   deletion_protection = false
@@ -42,7 +42,7 @@ resource "google_bigquery_table" "table_view" {
   view {
     query = <<EOF
 SELECT tag, SUM(count) as total_count
-FROM `${var.project_id}.my_dataset.my_table`
+FROM `${var.project_id}.my_dataset.my_table1`
 GROUP BY tag
 EOF
 
