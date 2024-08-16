@@ -1,4 +1,4 @@
-Hello! Here are results for test task.
+Hello! Here are results for test task. TEST EDIT VIA MOBILE APP
 1. Terraform code for creation dataset and table available in repository in terraform folder. Variable "service_account_json" is used in Jenkins later, "schema_json" contains table schema.
 2. Script available in docker\bigquery\scripts folder and added to Docker image.
 3. Yaml file to run job in Minikube available in kubernetes\bigquery-add-data folder. Configmap is used to pass GCLOUD_PROJECT variable to job, job itself uses volumeMounts to mount application_default_credentials.json from secret, secret uses data from host machine after impersonation.
